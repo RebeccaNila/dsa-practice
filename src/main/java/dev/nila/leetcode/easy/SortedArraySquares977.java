@@ -6,6 +6,7 @@ public class SortedArraySquares977 {
 
     /**
      * https://leetcode.com/problems/squares-of-a-sorted-array/description/
+     * Solution: https://www.youtube.com/watch?v=DJqYOsrqyy0
      * Given an integer array nums sorted in non-decreasing order,
      * return an array of the squares of each number sorted in non-decreasing order.
      *
@@ -30,6 +31,79 @@ public class SortedArraySquares977 {
         System.out.println(Arrays.toString(nums2));
 
 
+    }
+
+    /**
+     * The Optimized Solution (Two Pointers)
+     * The "Valley" Concept
+     * Imagine your numbers on a graph. Because the array is sorted, the squared values form a "valley" shape:
+     * Left End: Large squares (from negative numbers like -4² = 16).
+     * Middle: Small squares (near 0).
+     * Right End: Large squares (from positive numbers like 10² = 100).
+     * We know the biggest squares are always on the outside edges.
+     * Step-by-Step Visualization
+     * Let's trace the array: [-4, -1, 0, 3, 10] We need to fill the result array [_, _, _, _, _] starting from the end (index 4).
+     *
+     * Step 1: Compare the Ends
+     *      Left Pointer is at -4 (Square: 16)
+     *      Right Pointer is at 10 (Square: 100)
+     *      Compare: 100 > 16. The Right side wins.
+     *      Action: Put 100 at the end. Move Right pointer in.
+     *      Result: [_, _, _, _, 100]
+     *
+     * Step 2: Compare the New Ends
+     *      Left Pointer is at -4 (Square: 16)
+     *      Right Pointer is at 3 (Square: 9)
+     *      Compare: 16 > 9. The Left side wins.
+     *      Action: Put 16 in the next empty spot. Move Left pointer in.
+     *      Result: [_, _, _, 16, 100]
+     * Step 3: Compare the New Ends
+     *      Left Pointer is at -1 (Square: 1)
+     *      Right Pointer is at 3 (Square: 9)
+     *      Compare: 9 > 1. The Right side wins.
+     *      Action: Put 9 in the next spot. Move Right pointer in.
+     *      Result: [_, _, 9, 16, 100]
+     *
+     * Step 4: Compare the New Ends
+     *      Left Pointer is at -1 (Square: 1)
+     *      Right Pointer is at 0 (Square: 0)
+     *      Compare: 1 > 0. The Left side wins.
+     *      Action: Put 1 in the next spot. Move Left pointer in.
+     *      Result: [_, 1, 9, 16, 100]
+     *
+     * Step 5: Final Number
+     *      Both pointers meet at 0.
+     *      Action: Put 0 in the last spot.
+     * Final Result: [0, 1, 9, 16, 100]
+     * Why this is optimized
+     * Your Code: Looked at the numbers, split them into lists, squared them, reversed one list, and then merged them.
+     *
+     * Optimized: Just looked at the edges and picked the winner. It touched each number exactly once.
+     */
+
+    public int[] sortedSquaresOptimize(int[] nums) {
+        int n = nums.length;
+        int[] result = new int[n]; // The only extra space used
+
+        int left = 0;
+        int right = n - 1;
+        int index = n - 1; // Start filling from the end
+
+        while (left <= right) {
+            int leftSquare = nums[left] * nums[left];
+            int rightSquare = nums[right] * nums[right];
+
+            if (leftSquare > rightSquare) {
+                result[index] = leftSquare;
+                left++;
+            } else {
+                result[index] = rightSquare;
+                right--;
+            }
+            index--;
+        }
+
+        return result;
     }
 
     private static int[] sortedSquares(int[] nums) {

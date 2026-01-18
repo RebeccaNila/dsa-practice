@@ -4,14 +4,15 @@ public class MinSizeSubarraySum209 {
 
     /**
      * https://leetcode.com/problems/minimum-size-subarray-sum/description/
-     * Given an array of positive integers nums and a positive integer target, return the minimal length of a subarray whose sum is greater than or equal to target.
+     * Given an array of positive integers nums and a positive integer target,
+     * return the minimal length of a subarray whose sum is greater than or equal to target.
      * If there is no such subarray, return 0 instead.
      */
 
     public static void main(String[] args) {
         /**
          * 🐛 The Caterpillar Story (Concept)
-         * 1. The Goal: The caterpillar wants to eat numbers until its tummy is full (sum $\ge$ target).
+         * 1. The Goal: The caterpillar wants to eat numbers until its tummy is full (sum >= target).
          * 2. The Rule: The caterpillar wants to be as short (small) as possible while still being full.
          * 3. How it moves:
          * Eat (Expand): It stretches its head to the right to eat more numbers.
@@ -45,6 +46,15 @@ public class MinSizeSubarraySum209 {
         System.out.println(result);
 
     }
+
+//    private static int minSubArrayLenOptimized(int target, int[] nums) {
+//        /**
+//         * positive integer and target value
+//         * min Sum >= target
+//         * no value return 0
+//         * variable type sliding window
+//         */
+//    }
 
     /**
      * 🧠 Logic Breakdown for Interviews
