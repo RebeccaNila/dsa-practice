@@ -30,7 +30,7 @@ public class LongestRepeatingCharReplacement424 {
         int k1 = 2;
         String str2 = "AABABBA";
         int k2 = 1;
-        int result = longestRepeatingCharReplacement(str2, k2);
+        int result = longestRepeatingCharReplacementOptimize(str1, k1);
         System.out.println("Longest Repeating Character Replacement "+result);
     }
 
@@ -46,6 +46,31 @@ public class LongestRepeatingCharReplacement424 {
      *
      * replacements needed = window size - frequency of most common char
      */
+
+    private static int longestRepeatingCharReplacementOptimize(String s, int k){
+        int[] freq = new int[26];
+
+        int left = 0;
+        int maxFreq = 0;
+        int maxLen = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            freq[c - 'A']++;
+
+            maxFreq = Math.max(maxFreq, freq[c - 'A']);
+
+            // if window invalid, shrink
+            while ((right - left + 1) - maxFreq > k) {
+                freq[s.charAt(left) - 'A']--;
+                left++;
+            }
+
+            maxLen = Math.max(maxLen, right - left + 1);
+        }
+
+        return maxLen;
+    }
 
     private static int longestRepeatingCharReplacement(String s, int k){
         int left = 0, max = 0, n = s.length(), maxFreq = 0;
